@@ -1,6 +1,7 @@
 const express = require('express');
 const keys = require('./config/keys')
-const stripe = require('stripe')(keys.stripeSecretKey);
+require('dotenv').config()
+const stripe = require('stripe')(process.env.stripeSecretKey);
 const bodyParser = require('body-parser');
 const { engine } = require('express-handlebars');
 const app = express()
@@ -19,7 +20,7 @@ app.use(express.static(`${__dirname}/public`))
 // Index Route
 app.get('/', (req, res) => {
     res.render('index', {
-        stripePublishableKey: keys.stripePublishableKey
+        stripePublishableKey: process.env.stripePublishableKey
     })
 })
 app.get('/success', (req, res) => {
